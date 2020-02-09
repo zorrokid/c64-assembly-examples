@@ -13,6 +13,8 @@
 loop:
 	; Load value from memory location "text+x" to accu
 	lda text,x
+	; End if result from previous was 0 (end of text data)
+	beq wait
 
 	; Store to screen memory from accu
 	sta $0400,x
@@ -20,15 +22,10 @@ loop:
 	; Increase value in x-register
 	inx
 
-	; Compare value in x-register to 11 (length of string in "text")
-	; if content in x-register is equal, zero-flag is set.
-	cpx #11
-	; If result is not equal (zero-flag is not set), branch to label "loop"
 	bne loop
 
-	; Wait loop
 wait: 
 	jmp wait
 
 text:
-	!scr "hello world"
+	!scr "hell0 w0rld",0
